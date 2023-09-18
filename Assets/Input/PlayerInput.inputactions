@@ -1,0 +1,34 @@
+{
+    "name": "PlayerInput",
+    "maps": [
+        {
+            "name": "Movement",
+            "id": "a65e4bdb-e29f-440c-817f-cf36bb706ca3",
+            "actions": [
+                {
+                    "name": "Boost",
+                    "type": "Button",
+                    "id": "087f16ef-5e34-4766-b1f1-4d0b2905ce95",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "eace3e9d-d9cd-41a9-acaa-11f3c587745f",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Boost",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
