@@ -4,7 +4,7 @@ public class StateMachineData
 {
     public TargetTransformCharacter TargetTransform;
 
-    public float TimeToState;
+    public float _timeToState;
 
     private float _speed;
 
@@ -17,6 +17,17 @@ public class StateMachineData
                 throw new ArgumentOutOfRangeException(nameof(value));
 
             _speed = value;
+        }
+    }
+    public float TimeToState
+    {
+        get => _timeToState;
+        set
+        {
+            if(_timeToState < 0)
+                throw new ArgumentOutOfRangeException(nameof(value));
+
+            _timeToState = value;
         }
     }
 }

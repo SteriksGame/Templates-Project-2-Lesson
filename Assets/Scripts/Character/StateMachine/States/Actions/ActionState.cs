@@ -10,11 +10,13 @@ public abstract class ActionState : MovementState
     {
         base.Update();
 
-        if (IsOnTarget() && Data.TimeToState > 0)
+        float changeTimeToState = Data.TimeToState - Time.deltaTime;
+        if (IsOnTarget() && changeTimeToState > 0)
         {
-            Data.TimeToState -= Time.deltaTime;
+            Data.TimeToState = changeTimeToState;
             return;
         }
+        Data.TimeToState = 0;
 
         if (Input.Movement.Boost.IsPressed())
             StateSwitcher.SwitchState<BoostSpeedState>();
