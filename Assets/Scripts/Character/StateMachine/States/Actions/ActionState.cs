@@ -1,0 +1,24 @@
+﻿using UnityEngine;
+
+public abstract class ActionState : MovementState
+{
+    protected ActionState(IStateSwitcher stateSwitcher, StateMachineData data, Character character) : base(stateSwitcher, data, character)
+    {
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (IsOnTarget() && Data.TimeToState > 0)
+        {
+            Data.TimeToState -= Time.deltaTime;
+            return;
+        }
+
+        if (Input.Movement.Boost.IsPressed())
+            StateSwitcher.SwitchState<BoostSpeedState>();
+        else
+            StateSwitcher.SwitchState<DefaultSpeedState>();
+    }
+}

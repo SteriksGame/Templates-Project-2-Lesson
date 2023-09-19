@@ -1,13 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class StateMachineData
 {
     public TargetTransformCharacter TargetTransform;
 
-    public bool IsBoostInput;
     public float TimeToState;
 
     private float _speed;

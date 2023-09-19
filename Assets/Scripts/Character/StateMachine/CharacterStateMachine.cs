@@ -13,7 +13,8 @@ public class CharacterStateMachine : IStateSwitcher
 
         _states = new List<IState>()
         {
-            new MoveState(this, data, character),
+            new DefaultSpeedState(this, data, character),
+            new BoostSpeedState(this, data, character),
             new RestState(this, data, character),
             new WorkerState(this, data, character),
         };

@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class WorkerState : MovementState
+public class WorkerState : ActionState
 {
     private WorkerStateConfig _config;
     public WorkerState(IStateSwitcher stateSwitcher, StateMachineData data, Character character) : base(stateSwitcher, data, character)
@@ -13,17 +11,10 @@ public class WorkerState : MovementState
         Data.TimeToState = _config.TimeToWork;
     }
 
-    public override void Update()
-    {
-        base.Update();
-
-        if (IsFinish() && Data.TimeToState > 0)
-        {
-            Data.TimeToState -= Time.deltaTime;
-            return;
-        }
+    public override void Exit() 
+    { 
+        base.Exit();
 
         Data.TargetTransform = _character.TransformHome;
-        StateSwitcher.SwitchState<MoveState>();
     }
 }

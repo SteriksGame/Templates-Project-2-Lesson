@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class RestState : MovementState
+public class RestState : ActionState
 {
     private RestStateConfig _config;
     public RestState(IStateSwitcher stateSwitcher, StateMachineData data, Character character) : base(stateSwitcher, data, character)
@@ -13,17 +11,10 @@ public class RestState : MovementState
         Data.TimeToState = _config.TimeToRest;
     }
 
-    public override void Update()
-    {
-        base.Update();
-
-        if (IsFinish() && Data.TimeToState > 0)
-        {
-            Data.TimeToState -= Time.deltaTime;
-            return;
-        }
+    public override void Exit() 
+    { 
+        base.Exit();
 
         Data.TargetTransform = _character.TransformWork;
-        StateSwitcher.SwitchState<MoveState>();
     }
 }

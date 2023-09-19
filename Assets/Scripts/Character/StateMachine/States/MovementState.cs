@@ -24,16 +24,18 @@ public abstract class MovementState : IState
     public virtual void Enter()
     {
         Debug.Log(GetType());
+
+        AddInputActionsCallback();
     }
 
     public virtual void Exit()
     {
-        
+        RemoveInputActionsCallback();
     }
 
     public void HandleInput()
     {
-        Data.IsBoostInput = ReadBoostInput();
+        
     }
 
     public virtual void Update()
@@ -44,7 +46,7 @@ public abstract class MovementState : IState
         _character.transform.rotation = GetRotationFrom(velocity);
     }
 
-    protected bool IsFinish()
+    protected bool IsOnTarget()
     {
         if (Vector3.Distance(_character.transform.position, Data.TargetTransform.transform.position) < 0.1f)
             return true;
@@ -52,7 +54,9 @@ public abstract class MovementState : IState
         return false;
     }
 
-    private bool ReadBoostInput() => Input.Movement.Boost.inProgress;
+    protected virtual void AddInputActionsCallback() { }
+
+    protected virtual void RemoveInputActionsCallback() { }
 
     private Vector3 GetConvertedVelocity()
     {
