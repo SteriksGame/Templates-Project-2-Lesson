@@ -50,6 +50,94 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Characteristic"",
+            ""id"": ""28e2fcb5-72dc-460c-a3f0-9dd6bd89fd14"",
+            ""actions"": [
+                {
+                    ""name"": ""HealAdd"",
+                    ""type"": ""Button"",
+                    ""id"": ""22f1b3ea-5b76-4aa8-8fa0-6be8542a1a36"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HealReduce"",
+                    ""type"": ""Button"",
+                    ""id"": ""ce760b7e-295a-4fd5-8692-30ed32992e51"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LevelAdd"",
+                    ""type"": ""Button"",
+                    ""id"": ""15fc7bc4-b427-491b-a66c-59fbb8c07e8b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LevelReduce"",
+                    ""type"": ""Button"",
+                    ""id"": ""5f744ae9-8c25-4143-ad45-6f0592484a3d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""dbd784b2-5470-4992-9025-7a4a53c4f74f"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HealAdd"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b89fe11-6773-42a0-b413-e58727eaddc1"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HealReduce"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""49df862c-d596-49ce-855d-73ff429c40ce"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LevelAdd"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fe4351e9-34be-466f-913d-83c7691da9e4"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LevelReduce"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -57,6 +145,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // Movement
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_Boost = m_Movement.FindAction("Boost", throwIfNotFound: true);
+        // Characteristic
+        m_Characteristic = asset.FindActionMap("Characteristic", throwIfNotFound: true);
+        m_Characteristic_HealAdd = m_Characteristic.FindAction("HealAdd", throwIfNotFound: true);
+        m_Characteristic_HealReduce = m_Characteristic.FindAction("HealReduce", throwIfNotFound: true);
+        m_Characteristic_LevelAdd = m_Characteristic.FindAction("LevelAdd", throwIfNotFound: true);
+        m_Characteristic_LevelReduce = m_Characteristic.FindAction("LevelReduce", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -160,8 +254,85 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public MovementActions @Movement => new MovementActions(this);
+
+    // Characteristic
+    private readonly InputActionMap m_Characteristic;
+    private List<ICharacteristicActions> m_CharacteristicActionsCallbackInterfaces = new List<ICharacteristicActions>();
+    private readonly InputAction m_Characteristic_HealAdd;
+    private readonly InputAction m_Characteristic_HealReduce;
+    private readonly InputAction m_Characteristic_LevelAdd;
+    private readonly InputAction m_Characteristic_LevelReduce;
+    public struct CharacteristicActions
+    {
+        private @PlayerInput m_Wrapper;
+        public CharacteristicActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @HealAdd => m_Wrapper.m_Characteristic_HealAdd;
+        public InputAction @HealReduce => m_Wrapper.m_Characteristic_HealReduce;
+        public InputAction @LevelAdd => m_Wrapper.m_Characteristic_LevelAdd;
+        public InputAction @LevelReduce => m_Wrapper.m_Characteristic_LevelReduce;
+        public InputActionMap Get() { return m_Wrapper.m_Characteristic; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CharacteristicActions set) { return set.Get(); }
+        public void AddCallbacks(ICharacteristicActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CharacteristicActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CharacteristicActionsCallbackInterfaces.Add(instance);
+            @HealAdd.started += instance.OnHealAdd;
+            @HealAdd.performed += instance.OnHealAdd;
+            @HealAdd.canceled += instance.OnHealAdd;
+            @HealReduce.started += instance.OnHealReduce;
+            @HealReduce.performed += instance.OnHealReduce;
+            @HealReduce.canceled += instance.OnHealReduce;
+            @LevelAdd.started += instance.OnLevelAdd;
+            @LevelAdd.performed += instance.OnLevelAdd;
+            @LevelAdd.canceled += instance.OnLevelAdd;
+            @LevelReduce.started += instance.OnLevelReduce;
+            @LevelReduce.performed += instance.OnLevelReduce;
+            @LevelReduce.canceled += instance.OnLevelReduce;
+        }
+
+        private void UnregisterCallbacks(ICharacteristicActions instance)
+        {
+            @HealAdd.started -= instance.OnHealAdd;
+            @HealAdd.performed -= instance.OnHealAdd;
+            @HealAdd.canceled -= instance.OnHealAdd;
+            @HealReduce.started -= instance.OnHealReduce;
+            @HealReduce.performed -= instance.OnHealReduce;
+            @HealReduce.canceled -= instance.OnHealReduce;
+            @LevelAdd.started -= instance.OnLevelAdd;
+            @LevelAdd.performed -= instance.OnLevelAdd;
+            @LevelAdd.canceled -= instance.OnLevelAdd;
+            @LevelReduce.started -= instance.OnLevelReduce;
+            @LevelReduce.performed -= instance.OnLevelReduce;
+            @LevelReduce.canceled -= instance.OnLevelReduce;
+        }
+
+        public void RemoveCallbacks(ICharacteristicActions instance)
+        {
+            if (m_Wrapper.m_CharacteristicActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ICharacteristicActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CharacteristicActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CharacteristicActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public CharacteristicActions @Characteristic => new CharacteristicActions(this);
     public interface IMovementActions
     {
         void OnBoost(InputAction.CallbackContext context);
+    }
+    public interface ICharacteristicActions
+    {
+        void OnHealAdd(InputAction.CallbackContext context);
+        void OnHealReduce(InputAction.CallbackContext context);
+        void OnLevelAdd(InputAction.CallbackContext context);
+        void OnLevelReduce(InputAction.CallbackContext context);
     }
 }

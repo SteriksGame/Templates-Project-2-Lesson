@@ -28,6 +28,94 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Characteristic",
+            "id": "28e2fcb5-72dc-460c-a3f0-9dd6bd89fd14",
+            "actions": [
+                {
+                    "name": "HealAdd",
+                    "type": "Button",
+                    "id": "22f1b3ea-5b76-4aa8-8fa0-6be8542a1a36",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HealReduce",
+                    "type": "Button",
+                    "id": "ce760b7e-295a-4fd5-8692-30ed32992e51",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LevelAdd",
+                    "type": "Button",
+                    "id": "15fc7bc4-b427-491b-a66c-59fbb8c07e8b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LevelReduce",
+                    "type": "Button",
+                    "id": "5f744ae9-8c25-4143-ad45-6f0592484a3d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dbd784b2-5470-4992-9025-7a4a53c4f74f",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HealAdd",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b89fe11-6773-42a0-b413-e58727eaddc1",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HealReduce",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "49df862c-d596-49ce-855d-73ff429c40ce",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LevelAdd",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fe4351e9-34be-466f-913d-83c7691da9e4",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LevelReduce",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
