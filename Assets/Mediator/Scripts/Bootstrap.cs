@@ -8,8 +8,9 @@ public class Bootstrap : MonoBehaviour
     {
         PlayerInput input = new PlayerInput();
 
-        PlayerCharacteristic playerCharacteristic = new PlayerCharacteristic(input);
+        PlayerStats playerStats = new PlayerStats(input);
+        Level level = new Level();
 
-        _mediator.Initialized(playerCharacteristic);
+        _mediator.Initialized(playerStats, level);
     }
 }

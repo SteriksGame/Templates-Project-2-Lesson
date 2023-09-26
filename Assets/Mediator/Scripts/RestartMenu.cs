@@ -1,6 +1,6 @@
 using System;
 
-public class RestartMenu : UIMenu
+public class RestartMenu : WindowBase
 {
     public event Action Restart;
 
